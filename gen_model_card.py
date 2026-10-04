@@ -85,7 +85,16 @@ card = {
 }
 
 # --- station identity from OpenAQ (best effort) ------------------------------
-key = "17803b50a1dac87cafdb7056be122a9e9ea8d1e8abef8df48f3183c8fb2a8d1c"
+# Offline fallback: the area name from the node list (no API call needed).
+try:
+    from live import NODES
+    _area = next((a for i, a, _ in NODES if i == loc_id), None)
+except Exception:
+    _area = None
+if loc_id:
+    card["station"] = {"name": f"{_area}, Dhaka" if _area else f"OpenAQ location {loc_id}", "location_id": loc_id}
+
+key = os.environ.get("OPENAQ_API_KEY")
 if loc_id and key:
     try:
         import requests

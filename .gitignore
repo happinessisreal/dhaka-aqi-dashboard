@@ -17,15 +17,8 @@ Thumbs.db
 # Raw API download + intermediate outputs (always regenerable).
 openaq_dhaka_pm25.csv
 model_metrics.csv
-*.png
+/*.png
 
-# Model bundle + dashboard inputs the Flask app reads at startup.
-# Kept on disk so `python app.py` runs immediately, but excluded from VCS.
-# To ship sample data so the app works on a fresh clone, force-add them:
-#   git add -f dashboard_data.csv predictions_actual_vs_predicted.csv metrics.json aqi_model.joblib
-aqi_model.joblib
-dashboard_data.csv
-predictions_actual_vs_predicted.csv
-metrics.json
-model_card.json
-network.json
+# Model bundle + dashboard inputs are committed (small) so `python app.py` works
+# on a fresh clone. Re-run the notebook's Section 10-11 to regenerate them.
+# network.json is produced by gen_network.py (needs OPENAQ_API_KEY).

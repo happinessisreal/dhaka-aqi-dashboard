@@ -1,0 +1,78 @@
+{
+  "data_source": "OpenAQ v3 API",
+  "parameter": "PM2.5",
+  "parameter_units": "\u00b5g/m\u00b3",
+  "cadence": "hourly",
+  "target": "next-hour PM2.5 (\u00b5g/m\u00b3)",
+  "model": "Linear Regression",
+  "model_note": "selected over the alternative by lowest test-set RMSE",
+  "features": [
+    {
+      "name": "hour",
+      "desc": "hour of day (0\u201323)"
+    },
+    {
+      "name": "dow",
+      "desc": "day of week"
+    },
+    {
+      "name": "month",
+      "desc": "month"
+    },
+    {
+      "name": "pm25_lag1",
+      "desc": "PM2.5 one hour ago"
+    },
+    {
+      "name": "pm25_lag2",
+      "desc": "PM2.5 two hours ago"
+    },
+    {
+      "name": "pm25_lag3",
+      "desc": "PM2.5 three hours ago"
+    },
+    {
+      "name": "pm25_lag24",
+      "desc": "PM2.5 24 hours ago"
+    },
+    {
+      "name": "pm25_roll6",
+      "desc": "mean PM2.5 over last 6 h"
+    },
+    {
+      "name": "pm25_roll24",
+      "desc": "mean PM2.5 over last 24 h"
+    }
+  ],
+  "n_features": 9,
+  "coverage": {
+    "start": "2025-12-09 16:00 BST",
+    "end": "2026-06-05 23:00 BST",
+    "total_hours": 4280
+  },
+  "split": {
+    "scheme": "time-ordered 80 / 20 (no shuffle)",
+    "train_hours": 3404,
+    "test_hours": 852,
+    "train_start": "2025-12-10",
+    "train_end": "2026-05-01",
+    "test_start": "2026-05-01",
+    "test_end": "2026-06-05"
+  },
+  "metrics": {
+    "best_model": "Linear Regression",
+    "pm25_mae": 7.45,
+    "pm25_rmse": 11.88,
+    "pm25_r2": 0.738,
+    "aqi_mae": 11.73
+  },
+  "forecast": {
+    "method": "recursive (feeds each prediction back as the next lag)",
+    "max_hours": 72
+  },
+  "trained_at": "2026-10-04 13:22 BST",
+  "station": {
+    "name": "Uttara, Dhaka",
+    "location_id": 6157905
+  }
+}

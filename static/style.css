@@ -207,3 +207,8 @@ footer { text-align: center; color: var(--ink-dim); font-size: 0.76rem; padding:
   .readout { justify-content: center; }
   .scale { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* offline (no OpenAQ key) state */
+[hidden] { display: none !important; }
+.offline-hint { margin: 0 0 18px; padding: 10px 14px; border: 1px dashed var(--line, #263039); border-radius: 10px; }
+.offline-hint code { font-size: 0.78rem; }

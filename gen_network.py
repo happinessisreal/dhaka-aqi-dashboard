@@ -21,7 +21,10 @@ import numpy as np
 import pandas as pd
 import requests
 
-H = {"X-API-Key": "17803b50a1dac87cafdb7056be122a9e9ea8d1e8abef8df48f3183c8fb2a8d1c"}
+API_KEY = os.environ.get("OPENAQ_API_KEY")
+if not API_KEY:
+    raise SystemExit("Set OPENAQ_API_KEY first (free key: https://explore.openaq.org).")
+H = {"X-API-Key": API_KEY}
 BASE = "https://api.openaq.org/v3"
 
 # (location_id, area name it covers, is_primary)  — the node the ML model uses.

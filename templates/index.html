@@ -44,8 +44,11 @@
       </div>
     </section>
 
+    <!-- shown instead of the two network cards when no network.json / live key is available -->
+    <p class="note offline-hint" id="netOffline" hidden>City sensor network hidden: no <code>network.json</code> snapshot. Set <code>OPENAQ_API_KEY</code> and run <code>python gen_network.py</code> to enable the multi-station map and area comparison.</p>
+
     <!-- CITY SENSOR NETWORK: multiple public monitoring stations -->
-    <section class="card">
+    <section class="card" id="networkCard">
       <div class="card-head">
         <h2>City sensor network <span class="tag" id="netCount">— stations</span></h2>
         <span class="updated live-dot" id="netUpdated">—</span>
@@ -56,7 +59,7 @@
     </section>
 
     <!-- CROSS-AREA COMPARISON -->
-    <section class="card">
+    <section class="card" id="compareCard">
       <div class="card-head"><h2>Area comparison <span class="tag" id="netChartTag">30-day daily-mean PM2.5</span></h2></div>
       <div class="toggle metric-toggle" id="netMetricToggle"></div>
       <canvas id="networkChart" height="120"></canvas>

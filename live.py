@@ -18,7 +18,7 @@ Design notes:
     gen_network would run its batch fetch. Keep the two in sync if you edit one.
 
 Env:
-  OPENAQ_API_KEY   API key (falls back to the project key so it runs out-of-box).
+  OPENAQ_API_KEY   API key (free at https://explore.openaq.org). Unset = live mode off.
   AQI_LIVE         set to "0" to disable live fetching (serve files only).
   AQI_LIVE_TTL     cache lifetime in seconds (default 600 = 10 min).
 """
@@ -32,13 +32,11 @@ import datetime as dt
 import requests
 
 BASE = "https://api.openaq.org/v3"
-API_KEY = os.environ.get(
-    "OPENAQ_API_KEY",
-    "17803b50a1dac87cafdb7056be122a9e9ea8d1e8abef8df48f3183c8fb2a8d1c",
-)
+API_KEY = os.environ.get("OPENAQ_API_KEY", "")
 HEADERS = {"X-API-Key": API_KEY}
 
-ENABLED = os.environ.get("AQI_LIVE", "1") != "0"
+# Live mode needs a (free) OpenAQ key; without one the app serves the file snapshot.
+ENABLED = bool(API_KEY) and os.environ.get("AQI_LIVE", "1") != "0"
 TTL = int(os.environ.get("AQI_LIVE_TTL", "600"))
 TIMEOUT = int(os.environ.get("AQI_LIVE_TIMEOUT", "12"))
 

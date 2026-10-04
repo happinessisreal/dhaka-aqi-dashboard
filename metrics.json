@@ -1,0 +1,7 @@
+{
+  "best_model": "Linear Regression",
+  "pm25_mae": 7.45,
+  "pm25_rmse": 11.88,
+  "pm25_r2": 0.738,
+  "aqi_mae": 11.73
+}

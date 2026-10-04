@@ -74,7 +74,12 @@ function popupReadings(readings) {
 }
 
 function renderNetwork(net) {
-  if (!net || net.error) { setText("netCount", "unavailable"); return; }
+  if (!net || net.error) {
+    // No snapshot and no live key: hide the network cards rather than render empty frames.
+    ["networkCard", "compareCard"].forEach((id) => { if (el(id)) el(id).hidden = true; });
+    if (el("netOffline")) el("netOffline").hidden = false;
+    return;
+  }
   NET = net;
   setText("netCount", `${net.node_count} ${net.live === false ? "stations" : "live stations"}`);
   setText("netUpdated", (net.live === false ? "snapshot · " : "live · ") + net.generated_at);
@@ -210,7 +215,7 @@ function renderMeta(card) {
   const co = card.coverage || {};
   const sp = card.split || {};
   const fc = card.forecast || {};
-  let loc = "—";
+  let loc = null;
   if (st.coordinates && st.coordinates.lat != null) {
     loc = `${st.coordinates.lat.toFixed(3)}, ${st.coordinates.lon.toFixed(3)}`;
     if (st.distance_km_from_dhaka_centre != null) loc += ` · ${st.distance_km_from_dhaka_centre} km from city centre`;
@@ -318,7 +323,13 @@ function lineChart(ctx, datasets, labels, yTitle = "µg/m³") {
       interaction: { mode: "index", intersect: false },
       plugins: { legend: { labels: { boxWidth: 12, boxHeight: 12 } } },
       scales: {
-        x: { ticks: { maxTicksLimit: 8, maxRotation: 0 }, grid: { display: false } },
+        x: {
+          ticks: {
+            maxTicksLimit: 6, maxRotation: 0, autoSkipPadding: 24,
+            callback(v) { const l = String(this.getLabelForValue(v)); return /^\d{4}-/.test(l) ? l.slice(5) : l; },
+          },
+          grid: { display: false },
+        },
         y: { grid: { color: "#1c232c" }, title: { display: true, text: yTitle } },
       },
       elements: { point: { radius: 0 }, line: { borderWidth: 1.6, tension: 0.25 } },
@@ -377,7 +388,8 @@ async function loadPredictions() {
 // populate the forecast area picker from the live network nodes (primary first)
 function buildForecastAreas(net) {
   const sel = el("forecastArea");
-  if (!sel || !net || !net.nodes) return;
+  if (!sel) return;
+  if (!net || !net.nodes) { sel.parentElement.hidden = true; return; }
   const nodes = [...net.nodes].sort((a, b) => (b.primary ? 1 : 0) - (a.primary ? 1 : 0));
   sel.innerHTML = nodes.map((n) =>
     `<option value="${n.area}">${n.area}${n.primary ? " (primary)" : ""}</option>`).join("");
