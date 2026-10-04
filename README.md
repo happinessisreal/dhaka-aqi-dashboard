@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🌫️ Dhaka Air Quality: Monitoring & Prediction
+<img src="docs/logo.svg" alt="Dhaka AQI logo" width="104">
+
+# Dhaka Air Quality: Monitoring & Prediction
 
 **An end-to-end air-quality project for Dhaka.** It pulls PM2.5 readings from public monitoring stations through the OpenAQ v3 API, converts them to the US EPA 2024 AQI, trains a next-hour forecasting model, and serves everything in a live web dashboard.
 
