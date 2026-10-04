@@ -14,6 +14,8 @@
 [![Data: OpenAQ](https://img.shields.io/badge/data-OpenAQ_v3-5A67D8)](https://openaq.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
+<sub><i>The logo: an ouroboros in EPA colours. The recursive forecaster feeds on its own predictions, and hazardous air eats the clean tail.</i></sub>
+
 <img src="docs/screenshots/overview.png" alt="Dashboard overview: current US AQI 114 (Unhealthy for Sensitive Groups) for Uttara, Dhaka, with the EPA scale and dataset statistics" width="900">
 
 </div>
